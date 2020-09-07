@@ -39,11 +39,7 @@ class Auth extends CI_Controller
             if ($user['is_active'] == 1) {
                 // cek password
                 if (password_verify($password, $user['password'])) {
-                    $data = [
-                        'email' => $user['email'],
-                        'role_id' => $user['role_id']
-                    ];
-                    $this->session->set_userdata($data);
+                    $this->session->set_userdata($user);
                     if ($user['role_id'] == 1) {
                         redirect('admin');
                     } else {

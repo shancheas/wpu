@@ -22,4 +22,29 @@ class User extends CI_Controller
         $this->load->view('user/index', $data);
         $this->load->view('templates/footer');
     }
+
+	public function pinjaman()
+	{
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+		$data['title'] = 'Pinjaman';
+		$data['loans'] = $this->loan_model->getUserLoan($this->session->userdata('id'))->result();
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('user/dashboard', $data);
+		$this->load->view('templates/footer');
+	}
+
+	public function input_pinjaman()
+	{
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+		$data['title'] = 'Ajukan Pinjaman';
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('user/pinjaman/form', $data);
+		$this->load->view('templates/footer');
+	}
 }
